@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView_ProfileImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="170dp"
+        android:layout_height="221dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -21,13 +21,14 @@
     <TextView
         android:id="@+id/textView_FullName"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
+        android:gravity="center_vertical"
+        android:text="Will Smith"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,16 +36,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="FirstName LastName" />
 
-    <TextView
-        android:id="@+id/textView_Major"
+    <EditText
+        android:id="@+id/editText_Major"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
+        android:text="Computer Science"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,38 +53,38 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_FullName"
         tools:text="Computer Science" />
 
-    <TextView
-        android:id="@+id/textView_University"
+    <EditText
+        android:id="@+id/editText_University"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
+        android:text="West Bellair Academy"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView_ProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Major"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Major"
         tools:text="FAMU" />
 
     <Button
-        android:id="@+id/button_SubmitResume"
+        android:id="@+id/button_UploadResume"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Submit Resume"
+        android:text="Upload Resume"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView_ProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/textView_University" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_University" />
 
     <Button
         android:id="@+id/button_Cancel"
@@ -120,7 +121,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:maxLines="5"
+        android:minLines="5"
         app:layout_constraintBottom_toTopOf="@+id/button_Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
