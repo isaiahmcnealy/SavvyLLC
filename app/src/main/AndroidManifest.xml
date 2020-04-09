@@ -10,13 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 <!--        TODO: Change back to MainActivity after testing [line 13]-->
-        <activity android:name=".EditProfileActivity">
+        <activity android:name=".FirebaseUIActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        TODO: Uncomment the page that is loaded as initial activity-->
+        <activity android:name="com.isaiahmcnealy.savvyllc.MainActivity"/>
+<!--        <activity android:name="com.isaiahmcnealy.savvyllc.FirebaseUIActivity"/>-->
+        <activity android:name="com.isaiahmcnealy.savvyllc.EditProfileActivity"/>
+
     </application>
 
 </manifest>
