@@ -1,15 +1,5 @@
 package com.isaiahmcnealy.savvyllc;
 
-// TODO: create a preferences activity
-// TODO: add ability to UPDATE database information in edit user
-// TODO: navigate to registration form when register is selected
-// TODO: add a menu bar
-// TODO: add activities to menu bar navigation
-// TODO: move signout to toolbar in order to logout from any page
-// TODO: set user profile image
-// TODO: update information in database
-// Database filepath = "users"/userId/about || email || major || name || university
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
