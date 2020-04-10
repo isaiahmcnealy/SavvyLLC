@@ -13,11 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseUIActivity extends AppCompatActivity {
 
@@ -25,6 +31,10 @@ public class FirebaseUIActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 123;
 
     private FirebaseAuth mAuth;
+
+    private FirebaseFirestore fStore;
+
+    private String userId;
 
     private EditText etPassword;
     private Button btnLogin;
@@ -35,10 +45,9 @@ public class FirebaseUIActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //FirebaseApp.initializeApp(this);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();   // Initialize Firestore
+        mAuth = FirebaseAuth.getInstance();         // Initialize Firebase Auth
 
         etPassword = findViewById(R.id.etPassword);
         etEmail = findViewById(R.id.etEmail);
@@ -51,6 +60,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
                 Log.i(TAG, "Register button clicked");
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
+
                 registerUser(email, password);
             }
         });
@@ -83,7 +93,7 @@ public class FirebaseUIActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+//                            FirebaseUser user = mAuth.getCurrentUser();
                             goToEditProfileActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -99,16 +109,34 @@ public class FirebaseUIActivity extends AppCompatActivity {
     }
 
     // register new user
-    private void registerUser(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    private void registerUser(final String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Toast.makeText(FirebaseUIActivity.this, "User created", Toast.LENGTH_SHORT).show();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            // create database using new user's unique id
+                            userId = mAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userId);
+                            Map<String,Object> user_map = new HashMap<>();
+                            user_map.put("email", email);
+                            documentReference.set(user_map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.i(TAG, "onSuccess: user profile created for " + userId);
+                                }
+                            });
+
+
+                            // TODO: Change to main activity
+                            // navigate to next activity
                             goToEditProfileActivity();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "731135717319-4t13lvcn8f321cda4193gvfe70bubs92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaiahmcnealy.savvyllc",
+            "certificate_hash": "85c8d26eeb4a713347954136dd89e7e5ff5b3dbe"
+          }
+        },
+        {
           "client_id": "731135717319-bmkjks7jiifplu0aio6qk34vr410mllv.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -13,17 +13,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.auth.User;
 import com.isaiahmcnealy.savvyllc.models.Member;
+
+import javax.annotation.Nullable;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     public static final String TAG = "EditProfileActivity";
 
-    DatabaseReference DbRef;
-
-    Member member;
+    private FirebaseFirestore fStore;
+    private FirebaseAuth mAuth;
+    private String userId;
 
     private EditText etFullName;
     private EditText etMajor;
@@ -41,6 +52,10 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        // connect Firebase Objects
+        fStore = FirebaseFirestore.getInstance();       // Initialize Firestore
+        mAuth = FirebaseAuth.getInstance();             // initial
+
         // connect layout objects to java file
         etFullName = findViewById(R.id.et_FullName);
         etMajor = findViewById(R.id.editText_Major);
@@ -50,11 +65,24 @@ public class EditProfileActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.button_Cancel);
         btnSubmit = findViewById(R.id.button_Submit);
         btnSignout = findViewById(R.id.btnSignout);
-//        ivProfileImage = findViewById(R.id.imageView_ProfileImage);
+        ivProfileImage = findViewById(R.id.imageView_ProfileImage);
+        tvEmail = findViewById(R.id.tvEmail);
 
-        member = new Member();
+        userId = mAuth.getCurrentUser().getUid();
 
-        DbRef = FirebaseDatabase.getInstance().getReference().child("Member");
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                tvEmail.setText((documentSnapshot.getString("email")));
+                etFullName.setText((documentSnapshot.getString("name")));
+                etMajor.setText((documentSnapshot.getString("major")));
+                etAboutMe.setText((documentSnapshot.getString("about")));
+                etUniversity.setText((documentSnapshot.getString("university")));
+            }
+        });
+
 
         // read current user data from database
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -66,13 +94,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 String about = etAboutMe.getText().toString().trim();
                 //TODO: set user profile image
 //                File? profileImage = ????
-
-                member.setUsername(etFullName.getText().toString().trim());
-                member.setMajor(etMajor.getText().toString().trim());
-                member.setUniversity(etUniversity.getText().toString().trim());
-                member.setAbout(etAboutMe.getText().toString().trim());
-
-                DbRef.push().setValue(member);
 
                 Toast.makeText(EditProfileActivity.this, "Profile sucessfully updated", Toast.LENGTH_SHORT).show();
             }
@@ -102,6 +123,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+//    private void writeNewUser(String userId, String name, String major, String university, String about) {
+//        fStore.child("users").child(userId).child("name").setValue(name);
+//        fStore.child("users").child(userId).child("major").setValue(major);
+//        fStore.child("users").child(userId).child("university").setValue(university);
+//        fStore.child("users").child(userId).child("about").setValue(about);
+//    }
+
     public void updateProfile(){
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDbRef = mDatabase.getReference();
@@ -121,3 +149,12 @@ public class EditProfileActivity extends AppCompatActivity {
         finish();
     }
 }
+
+
+// TODO: create a registration form
+// TODO: create a preferences activity
+// TODO: add ability to update datbase information
+// TODO: navigate to registration form when register is selected
+// TODO: add a signout button on the main activity
+// TODO: add a menu bar
+// TODO: add activities to menu bar navigation
