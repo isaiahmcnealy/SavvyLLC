@@ -54,6 +54,7 @@ public class RegistrationActivity extends AppCompatActivity {
         etMajor = findViewById(R.id.etMajor);
         etUniversity = findViewById(R.id.etUniversity);
         etAbout = findViewById(R.id.etAbout);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         userId = mAuth.getCurrentUser().getUid();
 
@@ -75,7 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 documentReference.set(user_map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "onSuccess: user profile created for " + userId);
+                        Log.i(TAG, "btnSubmit: user profile created for " + userId);
                     }
                 });
 

@@ -80,7 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-
+        // submit changes to database
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,14 +91,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 // TODO: set user profile image
 
                 // TODO: update information in database
-
-                Toast.makeText(EditProfileActivity.this, "Profile sucessfully updated - soon?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfileActivity.this, "Profile sucessfully updated - not yet though?", Toast.LENGTH_SHORT).show();
                 goToMainActivity();
 
             }
         });
 
-        // TODO: move this to toolbar in order to logout from any page
+        // signout user
         btnSignout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +108,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        // cancel edit
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,16 +117,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
-
-//    private void writeNewUser(String userId, String name, String major, String university, String about) {
-//        fStore.child("users").child(userId).child("name").setValue(name);
-//        fStore.child("users").child(userId).child("major").setValue(major);
-//        fStore.child("users").child(userId).child("university").setValue(university);
-//        fStore.child("users").child(userId).child("about").setValue(about);
-//    }
 
     public void updateProfile(){
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -147,12 +138,3 @@ public class EditProfileActivity extends AppCompatActivity {
        // finish();
     }
 }
-
-
-// TODO: create a registration form
-// TODO: create a preferences activity
-// TODO: add ability to update database information
-// TODO: navigate to registration form when register is selected
-// TODO: add a signout button on the main activity
-// TODO: add a menu bar
-// TODO: add activities to menu bar navigation

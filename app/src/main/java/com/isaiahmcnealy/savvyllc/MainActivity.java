@@ -31,38 +31,38 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();         // Initialize Firebase Auth
 
         btnEditProfile = findViewById(R.id.btnEditProfile);
-        btnSignout = findViewById(R.id.btnSignout);
+        btnSignout = findViewById(R.id.btnSignOut);
 
         // Action: Navigate to EditProfileActivity
-//        btnEditProfile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "Navigating to edit profile");
-//                Toast.makeText(MainActivity.this, "Navigating to edit profile", Toast.LENGTH_SHORT).show();
-////                goToEditProfile();
-//
-//            }
-//        });
-//
-//        // Action: Sign out current user
-//        btnSignout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "User signing out");
-//                Toast.makeText(MainActivity.this, "You are now logged out", Toast.LENGTH_SHORT).show();
-//                FirebaseAuth.getInstance().signOut();
-////                goToLogin();
-//            }
-//        });
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Navigating to edit profile");
+                Toast.makeText(MainActivity.this, "Navigating to edit profile", Toast.LENGTH_SHORT).show();
+                goToEditProfile();
+
+            }
+        });
+
+        // Action: Sign out current user
+        btnSignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "User signing out");
+                Toast.makeText(MainActivity.this, "You are now logged out", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                goToLogin();
+            }
+        });
     }
 
-//    private void goToEditProfile() {
-//        Intent i = new Intent(this, LoginActivity.class);
-//        startActivity(i);
-//    }
-//
-//    private void goToLogin() {
-//        Intent i = new Intent(this, LoginActivity.class);
-//        startActivity(i);
-//    }
+    private void goToEditProfile() {
+        Intent i = new Intent(this, EditProfileActivity.class);
+        startActivity(i);
+    }
+
+    private void goToLogin() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+    }
 }

@@ -1,5 +1,15 @@
 package com.isaiahmcnealy.savvyllc;
 
+// TODO: create a preferences activity
+// TODO: add ability to UPDATE database information in edit user
+// TODO: navigate to registration form when register is selected
+// TODO: add a menu bar
+// TODO: add activities to menu bar navigation
+// TODO: move signout to toolbar in order to logout from any page
+// TODO: set user profile image
+// TODO: update information in database
+// Database filepath = "users"/userId/about || email || major || name || university
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,17 +55,24 @@ public class LoginActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();   // Initialize Firestore
         mAuth = FirebaseAuth.getInstance();         // Initialize Firebase Auth
 
+        // check if user is currently signed in
+        if (mAuth.getCurrentUser() != null) {
+            goToMainActivity();
+            finish();
+        }
+
+        // connect layout objects
         etPassword = findViewById(R.id.etPassword);
         etEmail = findViewById(R.id.etEmail);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
+
 
         // Action: Create new account with email and password.
         // Action: Navigate to RegistrationActivity.
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Register button clicked");
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
 
@@ -68,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "OnClick login button pressed");
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
 
@@ -76,15 +92,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    // Action: On start of activity check if user is still logged in
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        checkCurrentUser(currentUser);
     }
 
     // Action: Login user with email and password
@@ -96,8 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
-                            goToEditProfileActivity();
+                            goToMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -110,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Action: Register new user
     private void registerUser(final String email, String password) {
+        Log.i(TAG, "registerUser - creating new user with email and password");
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -133,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                             });
 
                             // navigate to next activity
+                            Log.i(TAG, "RegisterUser > CreateUser > onComplete - calling goToRegisterActivity");
                             goToRegisterActivity();
 
                         } else {
@@ -166,14 +174,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // if user is not null display a toast and navigate to main activity
-    private void checkCurrentUser(FirebaseUser currentUser) {
-        if (currentUser != null) { // if user is not null display a toast and navigate to
-            Log.i(TAG,"Current User: " + currentUser.getUid());
-            Toast.makeText(LoginActivity.this, "Member is still signed in", Toast.LENGTH_SHORT).show();
-            goToMainActivity();
-        }
-    }
 
 }
 
