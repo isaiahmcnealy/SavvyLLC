@@ -11,27 +11,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FirebaseUIActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    public static final String TAG = "FirebaseUIActivity";
-    public static final int RC_SIGN_IN = 123;
+    public static final String TAG = "LoginActivity";
 
     private FirebaseAuth mAuth;
-
     private FirebaseFirestore fStore;
 
     private String userId;
@@ -54,6 +50,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
 
+        // Action: Create new account with email and password.
+        // Action: Navigate to RegistrationActivity.
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,26 +63,31 @@ public class FirebaseUIActivity extends AppCompatActivity {
             }
         });
 
+        // Action: Login user
+        // Action: Navigate to MainActivity
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "OnClick login button pressed");
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
+
                 loginUser(email, password);
             }
         });
 
     }
 
+    // Action: On start of activity check if user is still logged in
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        checkCurrentUser(currentUser);
     }
 
+    // Action: Login user with email and password
     private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -98,25 +101,22 @@ public class FirebaseUIActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(FirebaseUIActivity.this, "Login failed.",
+                            Toast.makeText(LoginActivity.this, "Login failed.",
                                     Toast.LENGTH_SHORT).show();
-                            // ...
                         }
-
-                        // ...
                     }
                 });
     }
 
-    // register new user
+    // Action: Register new user
     private void registerUser(final String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(FirebaseUIActivity.this, "User created", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
 
-                            // Sign in success, update UI with the signed-in user's information
+                            // On successfull signup navigate to RegistrationActivity
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -132,43 +132,46 @@ public class FirebaseUIActivity extends AppCompatActivity {
                                 }
                             });
 
-
-                            // TODO: Change to main activity
                             // navigate to next activity
-                            goToEditProfileActivity();
+                            goToRegisterActivity();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(FirebaseUIActivity.this, "Registration failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
 
 
-    // use intent system to navigate to new activity
+    // use intent system to navigate to Main activity
     private void goToMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
     }
 
-    // use intent system to navigate to new activity
+    // use intent system to navigate to RegistrationForm activity
+    private void goToRegisterActivity() {
+        Intent i = new Intent(this, RegistrationActivity.class);
+        startActivity(i);
+
+    }
+
+    // use intent system to navigate to EditProfile activity
     private void goToEditProfileActivity() {
         Intent i = new Intent(this, EditProfileActivity.class);
         startActivity(i);
-        finish();
+
     }
 
     // if user is not null display a toast and navigate to main activity
-    private void updateUI(FirebaseUser currentUser) {
+    private void checkCurrentUser(FirebaseUser currentUser) {
         if (currentUser != null) { // if user is not null display a toast and navigate to
-            Toast.makeText(FirebaseUIActivity.this, "Member is still signed in", Toast.LENGTH_SHORT).show();
-            goToEditProfileActivity();
+            Log.i(TAG,"Current User: " + currentUser.getUid());
+            Toast.makeText(LoginActivity.this, "Member is still signed in", Toast.LENGTH_SHORT).show();
+            goToMainActivity();
         }
     }
 

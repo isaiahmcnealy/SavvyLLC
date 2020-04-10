@@ -133,7 +133,7 @@
 //    }
 //
 //    private void goToLogin() {
-//        Intent i = new Intent(this, FirebaseUIActivity.class);
+//        Intent i = new Intent(this, LoginActivity.class);
 //        startActivity(i);
 //        finish();
 //    }
