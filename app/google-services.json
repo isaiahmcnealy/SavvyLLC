@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "731135717319",
+    "firebase_url": "https://savvy-71d85.firebaseio.com",
+    "project_id": "savvy-71d85",
+    "storage_bucket": "savvy-71d85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731135717319:android:886158f369d0126f1bb3e2",
+        "android_client_info": {
+          "package_name": "com.isaiahmcnealy.savvyllc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731135717319-4t13lvcn8f321cda4193gvfe70bubs92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.isaiahmcnealy.savvyllc",
+            "certificate_hash": "85c8d26eeb4a713347954136dd89e7e5ff5b3dbe"
+          }
+        },
+        {
+          "client_id": "731135717319-bmkjks7jiifplu0aio6qk34vr410mllv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKIBJBzv6l4V6p4ZgLOsk-Kfn8Zw6tK7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731135717319-bmkjks7jiifplu0aio6qk34vr410mllv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
