@@ -13,18 +13,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.auth.User;
-import com.isaiahmcnealy.savvyllc.models.Member;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +49,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // connect Firebase Objects
         fStore = FirebaseFirestore.getInstance();       // Initialize Firestore
-        mAuth = FirebaseAuth.getInstance();             // initial
+        mAuth = FirebaseAuth.getInstance();             // initialize auth
 
         // connect layout objects to java file
         etFullName = findViewById(R.id.et_FullName);
@@ -72,6 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         DocumentReference documentReference = fStore.collection("users").document(userId);
 
+        // read current user data from database
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -84,7 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-        // read current user data from database
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +88,13 @@ public class EditProfileActivity extends AppCompatActivity {
                 String major = etMajor.getText().toString().trim();
                 String university = etUniversity.getText().toString().trim();
                 String about = etAboutMe.getText().toString().trim();
-                //TODO: set user profile image
-//                File? profileImage = ????
+                // TODO: set user profile image
 
-                Toast.makeText(EditProfileActivity.this, "Profile sucessfully updated", Toast.LENGTH_SHORT).show();
+                // TODO: update information in database
+
+                Toast.makeText(EditProfileActivity.this, "Profile sucessfully updated - soon?", Toast.LENGTH_SHORT).show();
+                goToMainActivity();
+
             }
         });
 
@@ -107,7 +106,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.makeText(EditProfileActivity.this, "You are now logged out", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 goToLogin();
-
             }
         });
 
@@ -139,21 +137,21 @@ public class EditProfileActivity extends AppCompatActivity {
     private void goToMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-        finish();
+        //finish();
 
     }
 
     private void goToLogin() {
-        Intent i = new Intent(this, FirebaseUIActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
-        finish();
+       // finish();
     }
 }
 
 
 // TODO: create a registration form
 // TODO: create a preferences activity
-// TODO: add ability to update datbase information
+// TODO: add ability to update database information
 // TODO: navigate to registration form when register is selected
 // TODO: add a signout button on the main activity
 // TODO: add a menu bar

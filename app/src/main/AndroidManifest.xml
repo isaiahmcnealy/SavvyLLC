@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 <!--        TODO: Change back to MainActivity after testing [line 13]-->
-        <activity android:name=".FirebaseUIActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,9 @@
 
 <!--        TODO: Uncomment the page that is loaded as initial activity-->
         <activity android:name="com.isaiahmcnealy.savvyllc.MainActivity"/>
-<!--        <activity android:name="com.isaiahmcnealy.savvyllc.FirebaseUIActivity"/>-->
+<!--        <activity android:name="com.isaiahmcnealy.savvyllc.LoginActivity"/> -->
         <activity android:name="com.isaiahmcnealy.savvyllc.EditProfileActivity"/>
+        <activity android:name="com.isaiahmcnealy.savvyllc.RegistrationActivity"/>
 
     </application>
 
